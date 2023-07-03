@@ -1,4 +1,4 @@
-package com.aslangroup.texnodev.presentaion.screen
+package com.aslangroup.texnodev.presentaion.screen.home
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.aslangroup.texnodev.app.theme.Background
 import com.aslangroup.texnodev.app.theme.BackgroundComponent
+import com.aslangroup.texnodev.presentaion.component.AppBarMain
 import com.aslangroup.texnodev.presentaion.component.PostComponent
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -25,10 +26,11 @@ fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
     Scaffold(
+        topBar = { AppBarMain() },
         containerColor = MaterialTheme.colors.Background
     ) {
-        LazyColumn(modifier = modifier.padding(horizontal = 10.dp)){
-            items(5){
+        LazyColumn(modifier = modifier.padding(horizontal = 10.dp)) {
+            items(5) {
                 PostComponent()
             }
         }

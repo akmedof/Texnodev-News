@@ -113,7 +113,7 @@ fun PostComponent(
 }
 
 @Composable
-fun PostFavorite(modifier: Modifier = Modifier) {
+private fun PostFavorite(modifier: Modifier = Modifier) {
     var isCheck by remember { mutableStateOf(false) }
     val icon = if (isCheck) R.drawable.favorite_active else R.drawable.favorite_inactive
     Box(

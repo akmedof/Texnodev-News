@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.aslangroup.texnodev.presentaion.screen.HomeScreen
+import com.aslangroup.texnodev.presentaion.screen.home.HomeScreen
 
 @ExperimentalMaterial3Api
 @Composable
