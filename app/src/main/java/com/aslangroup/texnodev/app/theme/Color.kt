@@ -28,6 +28,9 @@ val WhiteTextEmpty = Color(0xFFA6A6A6)
 val AuthorBoxTransparent = Color(0xBF060A20)
 val Transparent = Color(0x60A20)
 
+val CheckActive = Color(0xFF0ACF83)
+val CheckInActive = Color(0xFF787880)
+
 val Colors.Background
     @Composable
     get() = if (isSystemInDarkTheme())  DarkGray else LightGray

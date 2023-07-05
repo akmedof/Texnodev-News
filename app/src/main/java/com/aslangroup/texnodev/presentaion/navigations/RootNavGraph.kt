@@ -29,7 +29,7 @@ fun RootNavigationGraph(navController: NavHostController) {
             mainNavGraph(navController)
         }
 
-        navigation(route = Graph.AUTHENTICATION, startDestination = Screen.Register.route){
+        navigation(route = Graph.AUTHENTICATION, startDestination = Screen.Login.route){
             authNavGraph(navController)
         }
     }
