@@ -1,4 +1,4 @@
-package com.aslangroup.texnodev.presentaion.screen.home
+package com.aslangroup.texnodev.presentaion.screen.category
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
@@ -18,19 +18,15 @@ import com.aslangroup.texnodev.presentaion.component.PostComponent
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
 @Composable
-fun HomeScreen(
+fun CategoryScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
         topBar = { AppBarMain() },
-        bottomBar = {BottomBarMenu(navController = navController)},
+        bottomBar = { BottomBarMenu(navController = navController) },
         containerColor = MaterialTheme.colors.Background
     ) {
-        LazyColumn(modifier = modifier.padding(horizontal = 10.dp)) {
-            items(5) {
-                PostComponent()
-            }
-        }
+
     }
 }
