@@ -1,5 +1,9 @@
 package com.aslangroup.texnodev.app.theme
 
+import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -38,3 +42,12 @@ val PAGING_INDICATOR_SPACING = 6.dp
 
 val AppBarCollapsedHeight = 48.dp
 val AppBarExpendedHeight = 450.dp
+
+
+val EDIT_TEXT_FONT = TextStyle(
+    fontFamily = FontFamily.Monospace,
+    fontWeight = FontWeight.W400,
+    fontSize = TEXT_MEDIUM,
+//    lineHeight = 24.sp,
+    letterSpacing = 0.5.sp,
+)

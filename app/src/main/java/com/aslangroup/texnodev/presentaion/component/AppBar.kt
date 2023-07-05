@@ -1,5 +1,6 @@
 package com.aslangroup.texnodev.presentaion.component
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.aslangroup.texnodev.R
 import com.aslangroup.texnodev.app.theme.*
@@ -39,10 +41,11 @@ fun AppBarMain(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .padding(horizontal = PADDING_DEFAULT).padding(top = PADDING_SMALL)
+            .padding(horizontal = PADDING_DEFAULT)
+            .padding(top = PADDING_SMALL)
             .fillMaxWidth()
             .height(56.dp)
-            .clip(shape = RoundedCornerShape(RADIUS_SMALE/2))
+            .clip(shape = RoundedCornerShape(RADIUS_SMALE / 2))
             .background(MaterialTheme.colors.BackgroundComponent)
             .padding(PaddingValues(horizontal = PADDING_DEFAULT))
     ) {
@@ -58,7 +61,45 @@ fun AppBarMain(
 }
 
 @Composable
-fun AppActionIcon(icon: Int, color: Color, modifier: Modifier = Modifier) {
+fun AppBarAuth(
+    onBack: Boolean = false,
+    @SuppressLint("ModifierParameter")
+    modifier: Modifier = Modifier
+) {
+    val logo =
+        if (!isSystemInDarkTheme()) R.drawable.texnodev_logo_white else R.drawable.texnodev_logo_dark
+    Box(
+//        horizontalArrangement = Arrangement.SpaceBetween,
+//        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .padding(horizontal = PADDING_DEFAULT)
+            .padding(top = PADDING_SMALL)
+            .fillMaxWidth()
+            .height(56.dp)
+            .clip(shape = RoundedCornerShape(RADIUS_SMALE / 2))
+            .background(MaterialTheme.colors.BackgroundComponent)
+            .padding(PaddingValues(horizontal = PADDING_DEFAULT))
+    ) {
+        if (onBack)
+            AppActionIcon(
+                icon = R.drawable.ic_arrow_left_icon,
+                color = BlueMain,
+                iconSize = 30,
+                modifier = modifier.align(Alignment.CenterStart)
+            )
+
+        Image(
+            painter = painterResource(id = logo),
+            contentDescription = "",
+            modifier
+                .height(20.dp)
+                .align(Alignment.Center)
+        )
+    }
+}
+
+@Composable
+fun AppActionIcon(icon: Int, color: Color, iconSize: Int = 20, modifier: Modifier = Modifier) {
     Box(modifier = modifier
         .clip(shape = RoundedCornerShape(RADIUS_CYCLE))
         .clickable { }
@@ -67,7 +108,11 @@ fun AppActionIcon(icon: Int, color: Color, modifier: Modifier = Modifier) {
             painter = painterResource(id = icon),
             contentDescription = "",
             tint = color,
-            modifier = modifier.padding(PaddingValues(PADDING_SMALL)).size(20.dp)
+            modifier = modifier
+                .padding(PaddingValues(PADDING_SMALL))
+                .size(iconSize.dp)
         )
     }
 }
+
+
