@@ -20,7 +20,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -59,7 +63,11 @@ import com.aslangroup.texnodev.domain.model.user.PersonalData
 import com.aslangroup.texnodev.presentaion.component.AppBarDefault
 import com.aslangroup.texnodev.presentaion.component.ButtonDefault
 import com.aslangroup.texnodev.presentaion.component.EditTextApp
+import com.aslangroup.texnodev.presentaion.component.LogoutBottomSheet
+import com.aslangroup.texnodev.presentaion.navigations.Graph
+import kotlinx.coroutines.launch
 
+@ExperimentalMaterialApi
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
 @Composable
@@ -80,72 +88,85 @@ fun PersonalInfoScreen(
         city = item.city
     }
 
-    Scaffold(
-        topBar = {
-            AppBarDefault(
-                label = "Personal Info",
-                onBackClick = { navController.popBackStack() })
-        },
-        bottomBar = {
-            ButtonDefault(
-                label = "Qeydiyyatdan keç",
-                modifier = modifier
-                    .padding(bottom = PADDING_DEFAULT)
-                    .padding(horizontal = PADDING_DEFAULT),
-                onClick = {
-                    viewModel.updatePersonalData(
-                        PersonalData(
-                            name = name,
-                            surname = surname,
-                            email = email,
-                            city = city,
+    val sheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = false
+    )
+    val scope = rememberCoroutineScope()
+
+    Box {
+        Scaffold(
+            topBar = {
+                AppBarDefault(
+                    label = "Personal Info",
+                    onBackClick = { navController.popBackStack() })
+            },
+            bottomBar = {
+                ButtonDefault(
+                    label = "Qeydiyyatdan keç",
+                    modifier = modifier
+                        .padding(bottom = PADDING_DEFAULT)
+                        .padding(horizontal = PADDING_DEFAULT),
+                    onClick = {
+                        viewModel.updatePersonalData(
+                            PersonalData(
+                                name = name,
+                                surname = surname,
+                                email = email,
+                                city = city,
+                            )
                         )
-                    )
-                    Log.d("aslan-> PersonalData: ", viewModel.data.value.toString())
-                }
-            )
-        },
-        contentColor = MaterialTheme.colors.Background
-    ) {
-        LazyColumn(
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier
-                .padding(top = 80.dp)
-                .fillMaxSize()
-                .padding(horizontal = PADDING_DEFAULT)
+                        Log.d("aslan-> PersonalData: ", viewModel.data.value.toString())
+                    }
+                )
+            },
+            contentColor = MaterialTheme.colors.Background
         ) {
-            item {
-                ProfileAvatarEdit()
-                Spacer(modifier = modifier.padding(top = PADDING_LARGE))
-                EditTextApp(
-                    label = "Ad",
-                    value = name,
-                    keyboardType = KeyboardType.Text,
-                    onTextChange = { name = it }
-                )
-                EditTextApp(
-                    label = "Soyad",
-                    value = surname,
-                    keyboardType = KeyboardType.Text,
-                    onTextChange = { surname = it }
-                )
-                EditTextApp(
-                    label = "E-Mail",
-                    value = email,
-                    keyboardType = KeyboardType.Email,
-                    onTextChange = { email = it }
-                )
-                EditTextApp(
-                    label = "Şəhər",
-                    value = city,
-                    keyboardType = KeyboardType.Text,
-                    onTextChange = { city = it }
-                )
-                GenderCheck()
-                MultiSelectCategory()
+            LazyColumn(
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = modifier
+                    .padding(top = 80.dp)
+                    .fillMaxSize()
+                    .padding(horizontal = PADDING_DEFAULT)
+            ) {
+                item {
+                    ProfileAvatarEdit()
+                    Spacer(modifier = modifier.padding(top = PADDING_LARGE))
+                    EditTextApp(
+                        label = "Ad",
+                        value = name,
+                        keyboardType = KeyboardType.Text,
+                        onTextChange = { name = it }
+                    )
+                    EditTextApp(
+                        label = "Soyad",
+                        value = surname,
+                        keyboardType = KeyboardType.Text,
+                        onTextChange = { surname = it }
+                    )
+                    EditTextApp(
+                        label = "E-Mail",
+                        value = email,
+                        keyboardType = KeyboardType.Email,
+                        onTextChange = { email = it }
+                    )
+                    EditTextApp(
+                        label = "Şəhər",
+                        value = city,
+                        keyboardType = KeyboardType.Text,
+                        onTextChange = { city = it }
+                    )
+                    GenderCheck()
+                    MultiSelectCategory(onClick = {
+                        scope.launch {
+                            sheetState.show()
+                        }
+                    })
+                }
             }
         }
+        // Bottom Sheet UI
     }
 }
 
@@ -255,8 +276,10 @@ private fun GenderCheckItem(
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 private fun MultiSelectCategory(
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -281,14 +304,15 @@ private fun MultiSelectCategory(
                 fontWeight = FontWeight.SemiBold,
             )
             Box(
-                modifier = modifier.border(
-                    width = 1.dp,
-                    color = BlueMain,
-                    shape = RoundedCornerShape(RADIUS_CYCLE)
-                )
-                    .clickable {  }
+                modifier = modifier
+                    .border(
+                        width = 1.dp,
+                        color = BlueMain,
+                        shape = RoundedCornerShape(RADIUS_CYCLE)
+                    )
+                    .clickable(onClick = onClick)
                     .padding(horizontal = PADDING_MEDIUM, vertical = PADDING_SMALL)
-            ){
+            ) {
                 Text(
                     text = "Edit",
                     color = MaterialTheme.colors.TextColor,
@@ -297,5 +321,6 @@ private fun MultiSelectCategory(
                 )
             }
         }
+
     }
 }

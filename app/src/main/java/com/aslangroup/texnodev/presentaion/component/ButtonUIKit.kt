@@ -3,6 +3,7 @@ package com.aslangroup.texnodev.presentaion.component
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.aslangroup.texnodev.R
 import com.aslangroup.texnodev.app.theme.BackgroundComponent
 import com.aslangroup.texnodev.app.theme.Blue
+import com.aslangroup.texnodev.app.theme.BlueMain
 import com.aslangroup.texnodev.app.theme.PADDING_MEDIUM
 import com.aslangroup.texnodev.app.theme.PADDING_SMALL
 import com.aslangroup.texnodev.app.theme.RADIUS_SMALE
@@ -70,13 +72,40 @@ fun ButtonDefault(
 }
 
 @Composable
-fun ButtonSocial(
-    label: String = "Google",
-    icon: Int =  R.drawable.google_icon,
+fun ButtonDefaultLine(
+    label: String = "Button",
     onClick: () -> Unit,
     @SuppressLint("ModifierParameter")
     modifier: Modifier = Modifier
-){
+) {
+    Box(
+        modifier = modifier
+            .padding(top = PADDING_MEDIUM)
+            .fillMaxWidth()
+            .height(55.dp)
+            .border(width = 1.dp, color = BlueMain, shape = RoundedCornerShape(RADIUS_SMALE))
+            .clickable(onClick = onClick)
+    ) {
+        Text(
+            text = label,
+            color = MaterialTheme.colors.TextColor,
+            fontSize = TEXT_MEDIUM,
+            fontWeight = FontWeight.W400,
+            modifier = Modifier.align(
+                Alignment.Center
+            )
+        )
+    }
+}
+
+@Composable
+fun ButtonSocial(
+    label: String = "Google",
+    icon: Int = R.drawable.google_icon,
+    onClick: () -> Unit,
+    @SuppressLint("ModifierParameter")
+    modifier: Modifier = Modifier
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
@@ -104,7 +133,7 @@ fun ButtonSocial(
 fun AuthORLine(
     label: String,
     modifier: Modifier = Modifier
-){
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(PADDING_SMALL),
@@ -116,7 +145,8 @@ fun AuthORLine(
             modifier
                 .fillMaxWidth(0.435f)
                 .height(1.dp)
-                .background(MaterialTheme.colors.TextColor))
+                .background(MaterialTheme.colors.TextColor)
+        )
         Text(
             text = label,
             color = MaterialTheme.colors.TextColor,
@@ -128,7 +158,8 @@ fun AuthORLine(
             modifier
                 .fillMaxWidth()
                 .height(1.dp)
-                .background(MaterialTheme.colors.TextColor))
+                .background(MaterialTheme.colors.TextColor)
+        )
     }
 }
 
@@ -138,7 +169,7 @@ fun AuthNavText(
     buttonText: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
-){
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
@@ -171,7 +202,7 @@ fun AuthNavText(
             fontWeight = FontWeight.W400,
 //            modifier = modifier.padding(end = PADDING_SMALL)
         )
-        TextButton(onClick = onClick ) {
+        TextButton(onClick = onClick) {
             Text(
                 text = buttonText,
                 color = Blue,
@@ -187,7 +218,7 @@ fun AuthForgetPassword(
     label: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
-){
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxWidth()

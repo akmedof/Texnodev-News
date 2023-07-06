@@ -19,8 +19,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,9 +60,12 @@ import com.aslangroup.texnodev.app.theme.TextEmptyColor
 import com.aslangroup.texnodev.app.theme.White
 import com.aslangroup.texnodev.presentaion.component.AppBarMain
 import com.aslangroup.texnodev.presentaion.component.BottomBarMenu
+import com.aslangroup.texnodev.presentaion.component.LogoutBottomSheet
 import com.aslangroup.texnodev.presentaion.navigations.Graph
 import com.aslangroup.texnodev.presentaion.navigations.Screen
+import kotlinx.coroutines.launch
 
+@ExperimentalMaterialApi
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
 @Composable
@@ -66,72 +73,94 @@ fun ProfileScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    Scaffold(
-        topBar = { AppBarMain() },
-        bottomBar = { BottomBarMenu(navController = navController) },
-        containerColor = MaterialTheme.colors.Background
-    ) {
-        LazyColumn(
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .padding(top = 70.dp)
-                .fillMaxSize()
-                .padding(horizontal = PADDING_DEFAULT)
+    val sheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = false
+    )
+    val scope = rememberCoroutineScope()
+    Box {
+        Scaffold(
+            topBar = { AppBarMain() },
+            bottomBar = { BottomBarMenu(navController = navController) },
+            containerColor = MaterialTheme.colors.Background
         ) {
-            item {
-                ProfileView(
-                    fullName = "Broklyn Simmons",
-                    email = "broklynsimmons@gmail.com",
-                )
-                Spacer(modifier = modifier.padding(top = PADDING_MEDIUM))
-                ProfileMenu(
-                    label = "Personal info",
-                    descriptions = "Name, Surname, Email",
-                    icon = R.drawable.bottom_profile_icon,
-                    onClick = {
-                        navController.navigate(Screen.PersonalInfo.route)
-                    }
-                )
-                ProfileSwitchMenu(
-                    label = "Dark mode",
-                    descriptions = "Dark and light mode switch",
-                    icon = R.drawable.dark_mode_icon
-                )
-                ProfileMenu(
-                    label = "Change password",
-                    descriptions = "Forgot, change password",
-                    icon = R.drawable.change_password,
-                    onClick = {}
-                )
-                ProfileMenu(
-                    label = "Notification",
-                    descriptions = "App news notification",
-                    icon = R.drawable.notification_icon,
-                    onClick = {}
-                )
-                ProfileMenu(
-                    label = "Language",
-                    descriptions = "A-Z all languages",
-                    icon = R.drawable.langiage_icon,
-                    onClick = {}
-                )
-                ProfileMenu(
-                    label = "App version",
-                    descriptions = "Version: 8.47.7 (16) 8.0.1-001",
-                    icon = R.drawable.app_version_icon,
-                    onClick = {}
-                )
-                ProfileMenu(
-                    label = "Logout",
-                    icon = R.drawable.log_out_icon,
-                    onClick = {
-                        navController.popBackStack()
-                        navController.navigate(Graph.AUTHENTICATION)
-                    }
-                )
+            LazyColumn(
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .padding(top = 70.dp)
+                    .fillMaxSize()
+                    .padding(horizontal = PADDING_DEFAULT)
+            ) {
+                item {
+                    ProfileView(
+                        fullName = "Broklyn Simmons",
+                        email = "broklynsimmons@gmail.com",
+                    )
+                    Spacer(modifier = modifier.padding(top = PADDING_MEDIUM))
+                    ProfileMenu(
+                        label = "Personal info",
+                        descriptions = "Name, Surname, Email",
+                        icon = R.drawable.bottom_profile_icon,
+                        onClick = {
+                            navController.navigate(Screen.PersonalInfo.route)
+                        }
+                    )
+                    ProfileSwitchMenu(
+                        label = "Dark mode",
+                        descriptions = "Dark and light mode switch",
+                        icon = R.drawable.dark_mode_icon
+                    )
+                    ProfileMenu(
+                        label = "Change password",
+                        descriptions = "Forgot, change password",
+                        icon = R.drawable.change_password,
+                        onClick = {}
+                    )
+                    ProfileMenu(
+                        label = "Notification",
+                        descriptions = "App news notification",
+                        icon = R.drawable.notification_icon,
+                        onClick = {}
+                    )
+                    ProfileMenu(
+                        label = "Language",
+                        descriptions = "A-Z all languages",
+                        icon = R.drawable.langiage_icon,
+                        onClick = {}
+                    )
+                    ProfileMenu(
+                        label = "App version",
+                        descriptions = "Version: 8.47.7 (16) 8.0.1-001",
+                        icon = R.drawable.app_version_icon,
+                        onClick = {}
+                    )
+                    ProfileMenu(
+                        label = "Logout",
+                        icon = R.drawable.log_out_icon,
+                        onClick = {
+                            scope.launch { sheetState.show() }
+                        }
+                    )
+                }
             }
         }
+        LogoutBottomSheet(
+            sheetState = sheetState,
+            modifier = modifier.align(Alignment.BottomCenter),
+            onClickLogout = {
+                navController.popBackStack()
+                navController.navigate(Graph.AUTHENTICATION)
+                scope.launch {
+                    sheetState.hide()
+                }
+            },
+            onClickCancel = {
+                scope.launch {
+                    sheetState.hide()
+                }
+            },
+        )
     }
 }
 
