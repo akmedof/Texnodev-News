@@ -5,6 +5,7 @@ sealed class Screen(val route: String){
     object Favorite: Screen(route = "favorite_screen")
     object Category: Screen(route = "category_screen")
     object Profile: Screen(route = "profile_screen")
+    object PersonalInfo: Screen(route = "personal_info_screen")
     object Login: Screen(route = "login_screen")
     object Register: Screen(route = "register_screen")
     object ForgetPassword: Screen(route = "login_screen")

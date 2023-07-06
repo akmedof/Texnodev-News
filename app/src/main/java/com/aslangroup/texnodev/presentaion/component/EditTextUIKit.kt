@@ -35,13 +35,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.aslangroup.texnodev.R
 import com.aslangroup.texnodev.app.theme.BackgroundComponent
 import com.aslangroup.texnodev.app.theme.BlueMain
-import com.aslangroup.texnodev.app.theme.EDIT_TEXT_FONT
 import com.aslangroup.texnodev.app.theme.PADDING_DEFAULT
-import com.aslangroup.texnodev.app.theme.PADDING_EXTRA
 import com.aslangroup.texnodev.app.theme.PADDING_MEDIUM
 import com.aslangroup.texnodev.app.theme.PADDING_SMALL
 import com.aslangroup.texnodev.app.theme.PasswordIconColor
@@ -51,7 +48,7 @@ import com.aslangroup.texnodev.app.theme.TextColor
 import com.aslangroup.texnodev.app.theme.TextEmptyColor
 
 @Composable
-fun AuthEditText(
+fun EditTextApp(
     label: String,
     value: String,
     fontSize: TextUnit = TEXT_MEDIUM,
@@ -84,7 +81,7 @@ fun AuthEditText(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = modifier
-                    .padding(top = PADDING_MEDIUM/2)
+                    .padding(top = PADDING_MEDIUM)
                     .fillMaxWidth()
                     .height(55.dp)
                     .border(

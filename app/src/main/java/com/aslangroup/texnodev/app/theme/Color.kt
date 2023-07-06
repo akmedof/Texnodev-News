@@ -51,3 +51,7 @@ val Colors.PasswordIconColor
     @Composable
     get() = if (isSystemInDarkTheme()) WhiteTextEmpty else DarkTextEmpty
 
+val Colors.IconColor
+    @Composable
+    get() = if (isSystemInDarkTheme()) WhiteText else DarkText
+

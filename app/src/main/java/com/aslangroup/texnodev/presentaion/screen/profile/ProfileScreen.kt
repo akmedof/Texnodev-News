@@ -32,7 +32,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,15 +50,14 @@ import com.aslangroup.texnodev.app.theme.RADIUS_CYCLE
 import com.aslangroup.texnodev.app.theme.RADIUS_SMALE
 import com.aslangroup.texnodev.app.theme.TEXT_LARGE
 import com.aslangroup.texnodev.app.theme.TEXT_MEDIUM
-import com.aslangroup.texnodev.app.theme.TEXT_MEDIUM_PLUS
 import com.aslangroup.texnodev.app.theme.TEXT_SMALE
 import com.aslangroup.texnodev.app.theme.TextColor
 import com.aslangroup.texnodev.app.theme.TextEmptyColor
 import com.aslangroup.texnodev.app.theme.White
 import com.aslangroup.texnodev.presentaion.component.AppBarMain
 import com.aslangroup.texnodev.presentaion.component.BottomBarMenu
-import com.aslangroup.texnodev.presentaion.component.PostComponent
 import com.aslangroup.texnodev.presentaion.navigations.Graph
+import com.aslangroup.texnodev.presentaion.navigations.Screen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
@@ -91,7 +89,9 @@ fun ProfileScreen(
                     label = "Personal info",
                     descriptions = "Name, Surname, Email",
                     icon = R.drawable.bottom_profile_icon,
-                    onClick = {}
+                    onClick = {
+                        navController.navigate(Screen.PersonalInfo.route)
+                    }
                 )
                 ProfileSwitchMenu(
                     label = "Dark mode",

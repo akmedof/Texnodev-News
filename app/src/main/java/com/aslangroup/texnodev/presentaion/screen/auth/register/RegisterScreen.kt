@@ -2,9 +2,7 @@ package com.aslangroup.texnodev.presentaion.screen.auth.register
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,26 +14,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.aslangroup.texnodev.app.theme.Background
 import com.aslangroup.texnodev.app.theme.PADDING_DEFAULT
-import com.aslangroup.texnodev.app.theme.PADDING_EXTRA
-import com.aslangroup.texnodev.app.theme.PADDING_LARGE
 import com.aslangroup.texnodev.app.theme.PADDING_MEDIUM
 import com.aslangroup.texnodev.app.theme.PADDING_SMALL
 import com.aslangroup.texnodev.app.theme.TEXT_LARGE
 import com.aslangroup.texnodev.app.theme.TEXT_MEDIUM
 import com.aslangroup.texnodev.app.theme.TextColor
 import com.aslangroup.texnodev.presentaion.component.AppBarAuth
-import com.aslangroup.texnodev.presentaion.component.AuthEditText
-import com.aslangroup.texnodev.presentaion.component.AuthForgetPassword
+import com.aslangroup.texnodev.presentaion.component.EditTextApp
 import com.aslangroup.texnodev.presentaion.component.AuthNavText
 import com.aslangroup.texnodev.presentaion.component.AuthORLine
 import com.aslangroup.texnodev.presentaion.component.ButtonDefault
@@ -84,36 +77,31 @@ fun RegisterScreen(
                         fontWeight = FontWeight.W400,
                         fontSize = TEXT_MEDIUM
                     )
-                    Spacer(modifier = modifier.padding(PADDING_DEFAULT))
-                    AuthEditText(
+                    EditTextApp(
                         label = "Ad",
                         value = name,
                         keyboardType = KeyboardType.Email,
                         onTextChange = { viewModel.updateName(it) }
                     )
-                    Spacer(modifier = modifier.padding(PADDING_SMALL))
-                    AuthEditText(
+                    EditTextApp(
                         label = "Soyad",
                         value = surname,
                         keyboardType = KeyboardType.Email,
                         onTextChange = { viewModel.updateSurname(it) }
                     )
-                    Spacer(modifier = modifier.padding(PADDING_SMALL))
-                    AuthEditText(
+                    EditTextApp(
                         label = "E-poçt ünvanı",
                         value = email,
                         keyboardType = KeyboardType.Email,
                         onTextChange = { viewModel.updateEmail(it) }
                     )
-                    Spacer(modifier = modifier.padding(PADDING_SMALL))
-                    AuthEditText(
+                    EditTextApp(
                         label = "Şifrə",
                         value = password,
                         keyboardType = KeyboardType.Password,
                         onTextChange = { viewModel.updatePassword(it) }
                     )
-                    Spacer(modifier = modifier.padding(PADDING_SMALL))
-                    AuthEditText(
+                    EditTextApp(
                         label = "Şifrə (Təkrar)",
                         value = againPassword,
                         keyboardType = KeyboardType.Password,

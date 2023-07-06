@@ -62,7 +62,7 @@ fun ButtonDefault(
             color = White,
             fontSize = TEXT_MEDIUM,
             fontWeight = FontWeight.W400,
-            modifier = modifier.align(
+            modifier = Modifier.align(
                 Alignment.Center
             )
         )

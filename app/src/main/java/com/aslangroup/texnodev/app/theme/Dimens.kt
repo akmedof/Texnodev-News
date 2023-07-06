@@ -16,7 +16,6 @@ val RADIUS_SMALE = 10.dp
 
 val TEXT_EXTRA = 24.sp
 val TEXT_LARGE = 20.sp
-val TEXT_MEDIUM_PLUS = 16.sp
 val TEXT_MEDIUM = 14.sp
 val TEXT_SMALE = 12.sp
 
